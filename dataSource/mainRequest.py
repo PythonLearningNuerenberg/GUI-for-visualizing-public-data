@@ -1,6 +1,9 @@
 import requests
-from html.parser import  HTMLParser
 
+# singleton class to fetch the data from different source.
+# TODO: In which format the data will be available
+# TODO: From where the data will come and in which form.
+# TODO: A method to get the data from the below interface
 
 class DataSource:
     '''A singleton Data source class'''
@@ -14,7 +17,7 @@ class DataSource:
 
     @staticmethod
     def getInstance():
-        """static method instance"""
+        """static method instance to get the instance of this class"""
         if DataSource.__instance == None:
             DataSource();
         return DataSource.__instance
@@ -32,9 +35,12 @@ class DataSource:
             print("Status code is 404!!")
 
 
+# check whether the class gives the same instance to all the caller
+
 dataSource1 = DataSource.getInstance();
 dataSource2 = DataSource.getInstance();
 if dataSource1 is dataSource2:
     print("They are same")
 else:
     print("They are not same")
+
