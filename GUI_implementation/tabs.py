@@ -12,15 +12,15 @@ class Tabs(ttk.Frame):
         self.height = GetSystemMetrics(1)
         self.create_widgets()
     def create_widgets(self):
-        self.tabs = ttk.Notebook(self,width=int(self.width/2), height=int(self.height/2))
+        self.tabs = ttk.Notebook(self,width=int(self.width) -850, height=int(self.height/2))
         self.tabs.pack(side="top", expand=True, fill="both")
 
         self.tab1 = Tab1(self.tabs)
         self.tabs.add(self.tab1, text="Fetch/Plot")
 
-        #self.tab2 = Tab2(self.tabs)
-        #self.tabs.add(self.tab2, text="Tab 2")
-
-        #self.tab3 = Tab3(self.tabs)
-        #self.tabs.add(self.tab3, text="Tab 3")
+        # self.tab2 = Tab2(self.tabs)
+        # self.tabs.add(self.tab2, text="Tab 2")
+        #
+        # self.tab3 = Tab3(self.tabs)
+        # self.tabs.add(self.tab3, text="Tab 3")
 
