@@ -7,11 +7,12 @@ import requests
 
 class DataSource:
     '''A singleton Data source class'''
+    '''Since python does not have access specifiers like C++, all the attributes which starts with __ are mangled'''
     __instance = None;
 
     def __init__(self):
         if DataSource.__instance != None:
-            raise Exception("This is singleton Class")
+            raise Exception("Data Source is defined singleton, can't be used without getInstance()")
         else:
             DataSource.__instance = self;
 
