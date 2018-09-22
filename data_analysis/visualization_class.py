@@ -1,12 +1,23 @@
 
 # This class will have all function for the visualization part of the GUI for visualization
 import pandas as pd
-
-class Visualization:
-
+import matplotlib.pyplot as plt
 
 
-    def plot_everything(self, data, columns, type, filter = 0):
+
+
+
+
+class DataParsing:
+
+    def __init__(self, data):
+        self.data = data
+        self.df = pd.DataFrame()
+        self.generalCheck = False
+        self.outputDictonary = {}
+       # self.check_data(self.data)
+
+    def plot_data(self, column = None, row = None, plot_type= None):
         """ Everyone
         Phillip: Bubble Plot
         data = 2D np.array
@@ -15,77 +26,92 @@ class Visualization:
         filter = optional to filter the rows
         """
 
+        if column is not None and row is not None:
+            plotObject = self.df.loc[row, column]
 
-class DataParsing:
+            return plotObject
 
-    def __init__(self, data):
-        self.data = data
-        self.check_data(self.data)
 
-    def return_x_y(self, data):
 
-        message= self.check_data(data)
-        if message == True:
-            return 'The data you provided is not valid'
+    def process_data(self):
+
+        self.check_data()
+        if self.generalCheck == True:
+            error = {'error': 'The data you provided is not valid', 'error_id': '01'}
+            self.outputDictonary = {**self.outputDictonary, **error}
+
         else:
-            df, title = self.transform_to_df(data)
-            df_cleaned = self.cleanup_data(df)
-            dictionary_x_y = self.extract_names(df_cleaned)
+            error = {'error': 'Awesome', 'error_id': '00'}
+            self.outputDictonary = {**self.outputDictonary, **error}
+            self.transform_to_df()
+            self.cleanup_data()
+            self.extract_names()
 
-            return dictionary_x_y
 
-    def transform_to_df(self, data):
+
+    def transform_to_df(self):
         """
 
         :param data:
         :return:
         """
 
-        df = pd.DataFrame(data=data[1:, 1:],  # values
-                          index=data[1:, 0],  # 1st column as index
-                          columns=data[0, 1:])
-        title = data[0, 0]
-
-        return df, title
+        self.df = pd.DataFrame(data=self.data[1:, 1:],  # values
+                          index=self.data[1:, 0],  # 1st column as index
+                          columns=self.data[0, 1:])
+        self.outputDictonary['title'] = self.data[0, 0]
 
 
-    def check_data(self, data):
+
+    def check_data(self):
         """ Phillip
         Check if data is empty.
         :param data:
         :return:
         """
-        if data.size == 0:
-            message = True  # numpy array is empty
+        if self.data.size == 0:
+            self.generalCheck = True  # numpy array is empty
         else:
-            message = False # numpy array contains something
-        return message
+            self.generalCheck = False # numpy array contains something
 
-    def cleanup_data(self, data):
+
+    def cleanup_data(self):
         """
         Delete Missings and strange values.
 
         :param data: numpy array
         :return:
         """
-        data_cleaned = data.dropna(how='all')
-        return data_cleaned
+        self.df = self.df.dropna(how='all')
 
-    def extract_names(self, data):
-        """
+    def extract_names(self):
+        """ Francesco
         Extract names and the type of the table.
 
 
         :param data:2D (or 3D)  np.array
         :return: 1D np.array with the possible column names
         """
+        d = {}
+        Xnames = list(self.df.columns.values)
+        Ynames = list(self.df.index)
+        d['Xnames'] = Xnames
+        d['Ynames'] = Ynames
+
+        self.outputDictonary = {**self.outputDictonary, **d}
 
 
-        return arrayOfColumnName
 
 
 
 
 
+table = pd.read_excel("Test Data/indicator gapminder population.xlsx", header = None)
+table_numpy = table.values
+
+parsingObject = DataParsing(table_numpy)
+parsingObject.process_data()
 
 
+print(parsingObject.plot_data(1800.0, 'Austria', plot_type= None))
+#print(parsingObject.outputDictonary)
