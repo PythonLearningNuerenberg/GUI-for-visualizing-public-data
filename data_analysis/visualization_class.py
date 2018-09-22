@@ -93,10 +93,9 @@ class DataParsing:
         :return: 1D np.array with the possible column names
         """
         d = {}
-        Xnames = list(self.df.columns.values)
-        Ynames = list(self.df.index)
-        d['Xnames'] = Xnames
-        d['Ynames'] = Ynames
+        d['Xnames'] = list(self.df.columns.values)
+        d['Ynames'] = list(self.df.index)
+
 
         self.outputDictonary = {**self.outputDictonary, **d}
 
