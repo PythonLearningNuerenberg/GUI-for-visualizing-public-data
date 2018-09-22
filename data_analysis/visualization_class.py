@@ -1,6 +1,6 @@
 
 # This class will have all function for the visualization part of the GUI for visualization
-
+import pandas as pd
 
 class Visualization:
 
@@ -22,29 +22,57 @@ class DataParsing:
         self.data = data
         self.check_data(self.data)
 
+    def return_x_y(self, data):
+
+        message= self.check_data(data)
+        if message == True:
+            return 'The data you provided is not valid'
+        else:
+            df, title = self.transform_to_df(data)
+            df_cleaned = self.cleanup_data(df)
+            dictionary_x_y = self.extract_names(df_cleaned)
+
+            return dictionary_x_y
+
+    def transform_to_df(self, data):
+        """
+
+        :param data:
+        :return:
+        """
+
+        df = pd.DataFrame(data=data[1:, 1:],  # values
+                          index=data[1:, 0],  # 1st column as index
+                          columns=data[0, 1:])
+        title = data[0, 0]
+
+        return df, title
+
+
     def check_data(self, data):
         """ Phillip
         Check if data is empty.
         :param data:
         :return:
         """
-
-        message = True
-        message = False
+        if data.size == 0:
+            message = True  # numpy array is empty
+        else:
+            message = False # numpy array contains something
         return message
 
     def cleanup_data(self, data):
-        """ Francesco
+        """
         Delete Missings and strange values.
 
         :param data: numpy array
         :return:
         """
-
-        return data
+        data_cleaned = data.dropna(how='all')
+        return data_cleaned
 
     def extract_names(self, data):
-        """ Marie
+        """
         Extract names and the type of the table.
 
 
