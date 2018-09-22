@@ -1,8 +1,12 @@
 
 # This class will have all function for the visualization part of the GUI for visualization
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
+import plotly
+import plotly.graph_objs as go
+
+import numpy as np
 
 
 
@@ -26,10 +30,50 @@ class DataParsing:
         filter = optional to filter the rows
         """
 
+        #exact value
         if column is not None and row is not None:
             plotObject = self.df.loc[row, column]
+        #only Rows    
+        elif column is None and row is not None:
+            self.outputDictonary['title'] = "%s: %s" % (self.outputDictonary['title'],row) 
+            plotObject =self.df.loc[row,:]
+            data = [go.Bar(
+                    x=plotObject.index.values,
+                    y=plotObject.values
+            )]
+        #only Columns    
+        elif column is not None and row is None:
+            self.outputDictonary['title'] = "%s: %s" % (self.outputDictonary['title'], column) 
+            plotObject =self.df.loc[:,column]
+            data = [go.Bar(
+                    x=plotObject.index.values,
+                    y=plotObject.values
+            )]
+         #everything   
+        elif column is None and row is None:
+            plotObject =self.df
 
-            return plotObject
+            i=-1
+            traces =[]
+            for year in self.outputDictonary['Xnames']:
+                i += 1
+                trace = go.Scatter(
+                    x=self.outputDictonary['Xnames'],
+                    y=self.df.loc[self.outputDictonary['Ynames'][i],:].values,
+                    name=self.outputDictonary['Ynames'][i],
+                )
+                traces.append(trace)
+
+            data = traces
+            
+
+        plotly.offline.plot({
+            "data": data,
+            "layout": go.Layout(title=self.outputDictonary['title'])
+        }, auto_open=True)
+
+
+        return plotObject
 
 
 
@@ -103,14 +147,28 @@ class DataParsing:
 
 
 
-
-
+#windows
 table = pd.read_excel("Test Data/indicator gapminder population.xlsx", header = None)
+
+
+#mac
+#table = pd.read_excel("data_analysis/Test Data/indicator gapminder population.xlsx", header = None)
+
+
 table_numpy = table.values
 
 parsingObject = DataParsing(table_numpy)
 parsingObject.process_data()
 
 
-print(parsingObject.plot_data(1800.0, 'Austria', plot_type= None))
-#print(parsingObject.outputDictonary)
+
+#plot only column - First case
+#print(parsingObject.plot_data(1800, None, plot_type= None))
+
+#plot only row  -  Second Case
+#print(parsingObject.plot_data(None, "Italy", plot_type= None))
+
+#plot everything  - Third Case
+print(parsingObject.plot_data(None, None, plot_type= None))
+
+
