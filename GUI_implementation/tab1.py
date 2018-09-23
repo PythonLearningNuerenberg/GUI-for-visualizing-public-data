@@ -58,6 +58,10 @@ class Tab1(ttk.Frame):
         self.combobox_tableName = ttk.Combobox(self.labelFrame_selectData)
         self.combobox_tableName.grid(row=0, column=5, sticky=W + E, padx=10, pady=(2, 5))
 
+        self.button_download = ttk.Button(self.labelFrame_selectData, text='Download', command=self.download)
+        self.button_download.grid(row=0, column=6, sticky=W + E, padx=10, pady=(2, 5))
+
+
         self.labelFrame_configure2DPlot = ttk.LabelFrame(self, text=' Configure 2D plot ')
         self.labelFrame_configure2DPlot.grid(row=2, column=0, columnspan=4, sticky=W + E, padx=10, pady=(2, 5))
         self.labelFrame_configure2DPlot.rowconfigure(0, weight=0)
@@ -123,7 +127,6 @@ class Tab1(ttk.Frame):
         self.checkbox_scale4x = tkinter.Checkbutton(self.labelFrame_plot2DOptions, command= lambda: self.update_scale_checkbuttons(2), variable=self.var_scale4x)
         self.checkbox_scale4x.grid(row=2, column=3, sticky=W + E, padx=10, pady=(2, 5))
 
-
     def fetch_data(self):
         self.update_output_message('fetching data')
 
@@ -171,8 +174,8 @@ class Tab1(ttk.Frame):
             else:
                 var.set(0)
 
-
-
+    def download(self):
+        self.update_output_message('Downloading data.')
 
 
 
