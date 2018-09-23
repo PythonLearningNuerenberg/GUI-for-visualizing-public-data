@@ -1,11 +1,17 @@
-from tkinter import ttk, N, S, E, W, END, DISABLED, NORMAL, IntVar
+from tkinter import ttk, N, S, E, W, END, DISABLED, NORMAL, IntVar, DoubleVar
 import tkinter
 import time
+from threading import Thread
+from queue import Queue
+
+
+
 
 class Tab1(ttk.Frame):
     def __init__(self, master):
         ttk.Frame.__init__(self, master)
         self.create_widgets()
+        self.downloadCounter = 0
 
     def create_widgets(self):
         self.rowconfigure(0, weight=0)
@@ -18,9 +24,26 @@ class Tab1(ttk.Frame):
         self.columnconfigure(4, weight=0)
 
         self.labelFrame_fetchData = ttk.LabelFrame(self, text=' Fetch data ')
+        self.labelFrame_fetchData.rowconfigure(0, weight=0)
+        self.labelFrame_fetchData.rowconfigure(1, weight=0)
         self.labelFrame_fetchData.grid(row=0, column=0, sticky=W + E, padx=10, pady=(2, 5))
         self.button_fetchData = ttk.Button(self.labelFrame_fetchData, text='Fetch available data', command=self.fetch_data)
         self.button_fetchData.grid(row=0, column=0, sticky=W + E, padx=10, pady=(2, 5))
+        self.style_pbar = ttk.Style()
+        # add label in the layout
+        self.style_pbar.layout('text.Horizontal.TProgressbar',
+                     [('Horizontal.Progressbar.trough',
+                       {'children': [('Horizontal.Progressbar.pbar',
+                                      {'side': 'left', 'sticky': 'ns'})],
+                        'sticky': 'nswe'}),
+                      ('Horizontal.Progressbar.label', {'sticky': ''})])
+        # set initial text
+        self.style_pbar.configure('text.Horizontal.TProgressbar', text='0 %')
+        self.variable_progressbar = IntVar()
+        self.progressbar_fetching = ttk.Progressbar(self.labelFrame_fetchData, orient="horizontal",
+                                                    length=200,style='text.Horizontal.TProgressbar'
+                                                    , mode='determinate')
+        self.progressbar_fetching.grid(row=1, column=0, sticky=W + E, padx=10, pady=(2, 5))
         self.labelFrame_outputMessages = ttk.LabelFrame(self, text=' Output Messages ')
         self.labelFrame_outputMessages.grid(row=0, column=1, columnspan=3, sticky=W + E, padx=10, pady=(2, 5))
         self.labelFrame_outputMessages.rowconfigure(0, weight=0)
@@ -127,8 +150,12 @@ class Tab1(ttk.Frame):
         self.checkbox_scale4x = tkinter.Checkbutton(self.labelFrame_plot2DOptions, command= lambda: self.update_scale_checkbuttons(2), variable=self.var_scale4x)
         self.checkbox_scale4x.grid(row=2, column=3, sticky=W + E, padx=10, pady=(2, 5))
 
+
+
+
     def fetch_data(self):
         self.update_output_message('fetching data')
+        self.start_fetching()
 
     def update_output_message(self, text):
         text = self.format_output_message(text)
@@ -175,7 +202,37 @@ class Tab1(ttk.Frame):
                 var.set(0)
 
     def download(self):
-        self.update_output_message('Downloading data.')
+        if self.downloadCounter == 0:
+            self.update_output_message('Downloading data.')
+        if self.downloadCounter<10:
+            self.update_output_message('...')
+            self.downloadCounter+=1
+            self.after(1000, self.download)
+
+    def start_fetching(self):
+        self.bytes = 0
+        self.progressbar_fetching["value"] = 0
+        self.maxbytes = 50000
+        self.progressbar_fetching["maximum"] = 50000
+        self.fetching()
+
+    def fetching(self):
+        '''simulate reading 500 bytes; update progress bar'''
+        self.bytes += 500
+        #self.progressbar_fetching.step()
+        self.variable_progressbar.set(int((self.bytes/self.maxbytes)*100))
+        self.style_pbar.configure('text.Horizontal.TProgressbar',
+                        text='{0} %'.format(self.variable_progressbar.get()))  # update label
+        self.progressbar_fetching["value"] = self.bytes
+        if self.bytes < self.maxbytes:
+            # read more bytes after 100 ms
+            self.after(50, self.fetching)
+        else:
+            self.style_pbar.configure('text.Horizontal.TProgressbar',
+                                      text='Done')  # update label
+
+
+
 
 
 
