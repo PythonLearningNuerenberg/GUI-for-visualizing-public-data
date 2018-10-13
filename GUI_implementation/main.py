@@ -5,7 +5,7 @@ from tabs import Tabs
 
 
 root = Tk()
-root.wm_title('GUI-For Gapminder')
+root.wm_title('visualizing-public-data')
 #root.resizable(0,0)
 #root.iconbitmap('.ico')
 root.columnconfigure(0, weight=1)
