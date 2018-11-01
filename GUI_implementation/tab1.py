@@ -93,23 +93,50 @@ class Tab1(ttk.Frame):
         self.labelFrame_configure2DPlot.columnconfigure(0, weight=0)
         self.labelFrame_configure2DPlot.columnconfigure(1, weight=0)
         self.labelFrame_configure2DPlot.columnconfigure(2, weight=0)
-        self.label_Y_axis = ttk.Label(self.labelFrame_configure2DPlot, text='Y-axis ')
-        self.label_Y_axis.grid(row=0, column=0, sticky=W + E, padx=10, pady=(2, 5))
-        self.combobox_Y_axis = ttk.Combobox(self.labelFrame_configure2DPlot)
-        self.combobox_Y_axis.grid(row=0, column=1, sticky=W + E, padx=10, pady=(2, 5))
+        self.labelFrame_configure2DPlot.columnconfigure(3, weight=0)
+        self.labelFrame_configure2DPlot.columnconfigure(4, weight=0)
+        self.labelFrame_configure2DPlot.columnconfigure(5, weight=1)
+        self.labelFrame_configure2DPlot.columnconfigure(6, weight=1)
 
-        self.label_X_axis = ttk.Label(self.labelFrame_configure2DPlot, text='X-axis ')
-        self.label_X_axis.grid(row=1, column=0, sticky=W + E, padx=10, pady=(2, 5))
-        self.combobox_X_axis = ttk.Combobox(self.labelFrame_configure2DPlot)
-        self.combobox_X_axis.grid(row=1, column=1, sticky=W + E, padx=10, pady=(2, 5))
 
-        self.label_tableName = ttk.Label(self.labelFrame_configure2DPlot, text='Plot type ')
-        self.label_tableName.grid(row=2, column=0, sticky=W + E, padx=10, pady=(2, 5))
-        self.combobox_tableName = ttk.Combobox(self.labelFrame_configure2DPlot)
-        self.combobox_tableName.grid(row=2, column=1, sticky=W + E, padx=10, pady=(2, 5))
+        self.checkbox_var_plotByRow = IntVar()
+        self.checkbox_var_plotByRow.set(1)
+        self.checkbox_plotByRow = tkinter.Checkbutton(self.labelFrame_configure2DPlot, text='Plot by row',
+                                                      variable= self.checkbox_var_plotByRow,
+                                                      command=lambda: self.plot_options_checkboxes(0))
+        self.checkbox_plotByRow.grid(row=0, column=0, sticky=W + E, padx=10, pady=(2, 5))
+
+        self.checkbox_var_plotByColumn = IntVar()
+        self.checkbox_var_plotByColumn.set(0)
+        self.checkbox_plotByColumn = tkinter.Checkbutton(self.labelFrame_configure2DPlot, text='Plot by column',
+                                                         variable=self.checkbox_var_plotByColumn,
+                                                         command=lambda: self.plot_options_checkboxes(1))
+        self.checkbox_plotByColumn.grid(row=0, column=1, sticky=W + E, padx=10, pady=(2, 5))
+
+        self.checkbox_var_plotAll = IntVar()
+        self.checkbox_var_plotAll.set(0)
+        self.checkbox_plotAll = tkinter.Checkbutton(self.labelFrame_configure2DPlot, text='Plot all',
+                                                    variable=self.checkbox_var_plotAll,
+                                                    command=lambda: self.plot_options_checkboxes(2))
+        self.checkbox_plotAll.grid(row=0, column=2, sticky=W + E, padx=10, pady=(2, 5))
+
+        #self.label_Y_axis = ttk.Label(self.labelFrame_configure2DPlot, text='Y-axis ')
+        #self.label_Y_axis.grid(row=0, column=0, sticky=W + E, padx=10, pady=(2, 5))
+        #self.combobox_Y_axis = ttk.Combobox(self.labelFrame_configure2DPlot)
+        #self.combobox_Y_axis.grid(row=0, column=1, sticky=W + E, padx=10, pady=(2, 5))
+
+        self.label_selectData = ttk.Label(self.labelFrame_configure2DPlot, text='Select data ')
+        self.label_selectData.grid(row=1, column=0, sticky=W + E, padx=10, pady=(2, 5))
+        self.combobox_selectData = ttk.Combobox(self.labelFrame_configure2DPlot)
+        self.combobox_selectData.grid(row=1, column=1, sticky=W + E, padx=10, pady=(2, 5))
+
+        #self.label_tableName = ttk.Label(self.labelFrame_configure2DPlot, text='Plot type ')
+        #self.label_tableName.grid(row=2, column=0, sticky=W + E, padx=10, pady=(2, 5))
+        #self.combobox_tableName = ttk.Combobox(self.labelFrame_configure2DPlot)
+        #self.combobox_tableName.grid(row=2, column=1, sticky=W + E, padx=10, pady=(2, 5))
 
         self.labelFrame_plot2DOptions = ttk.LabelFrame(self.labelFrame_configure2DPlot, text=' Plot options ')
-        self.labelFrame_plot2DOptions.grid(row=0, rowspan=3, column=2, columnspan=4, sticky=W + E, padx=10, pady=(2, 5))
+        self.labelFrame_plot2DOptions.grid(row=0, rowspan=3, column=3, columnspan=2, sticky=W + E, padx=10, pady=(2, 5))
         self.labelFrame_plot2DOptions.rowconfigure(0, weight=0)
         self.labelFrame_plot2DOptions.rowconfigure(1, weight=0)
         self.labelFrame_plot2DOptions.rowconfigure(2, weight=0)
@@ -150,6 +177,8 @@ class Tab1(ttk.Frame):
         self.checkbox_scale4x = tkinter.Checkbutton(self.labelFrame_plot2DOptions, command= lambda: self.update_scale_checkbuttons(2), variable=self.var_scale4x)
         self.checkbox_scale4x.grid(row=2, column=3, sticky=W + E, padx=10, pady=(2, 5))
 
+        self.button_plot = ttk.Button(self.labelFrame_configure2DPlot, text='Plot', command=self.plot)
+        self.button_plot.grid(row=0, column=5, rowspan=2,columnspan=3, sticky=W + E, padx=10, pady=(2, 5))
 
 
 
@@ -231,6 +260,22 @@ class Tab1(ttk.Frame):
             self.style_pbar.configure('text.Horizontal.TProgressbar',
                                       text='Done')  # update label
 
+    def plot_options_checkboxes(self, id):
+        if id == 0:
+            self.checkbox_var_plotByRow.set(1)
+            self.checkbox_var_plotByColumn.set(0)
+            self.checkbox_var_plotAll.set(0)
+        elif id ==1:
+            self.checkbox_var_plotByRow.set(0)
+            self.checkbox_var_plotByColumn.set(1)
+            self.checkbox_var_plotAll.set(0)
+        elif id == 2:
+            self.checkbox_var_plotByRow.set(0)
+            self.checkbox_var_plotByColumn.set(0)
+            self.checkbox_var_plotAll.set(1)
+
+    def plot(self):
+        pass
 
 
 
