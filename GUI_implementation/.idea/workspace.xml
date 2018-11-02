@@ -9,26 +9,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/GUI_implementation$main.coverage" NAME="main Coverage Results" MODIFIED="1540641775205" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GUI_implementation$main.coverage" NAME="main Coverage Results" MODIFIED="1541152356949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="39319152">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="3" />
-          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.11" value="2" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="950" />
+          <entry key="py" value="1209" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="950" />
+          <entry key="Python" value="1209" />
         </counts>
       </usages-collector>
     </session>
@@ -39,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
-              <caret line="2" column="21" lean-forward="true" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+              <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -50,18 +50,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tab1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="180" column="57" selection-start-line="180" selection-start-column="57" selection-end-line="180" selection-end-column="57" />
+            <state relative-caret-position="268">
+              <caret line="182" column="44" selection-start-line="182" selection-start-column="44" selection-end-line="182" selection-end-column="44" />
               <folding>
                 <element signature="e#0#77#0" expanded="true" />
-                <element signature="e#9747#9820#0" />
-                <element signature="e#9873#10078#0" />
-                <element signature="e#10131#10932#0" />
-                <element signature="e#10973#11042#0" />
-                <element signature="e#11101#11404#0" />
-                <element signature="e#11438#11689#0" />
-                <element signature="e#11729#11897#0" />
-                <element signature="e#11931#12618#0" />
               </folding>
             </state>
           </provider>
@@ -70,12 +62,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tabs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-45">
-              <caret line="13" column="92" lean-forward="true" selection-start-line="13" selection-start-column="92" selection-end-line="13" selection-end-column="92" />
+            <state relative-caret-position="243">
+              <caret line="13" column="92" selection-start-line="13" selection-start-column="92" selection-end-line="13" selection-end-column="92" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <marker date="1540639882633" expanded="true" signature="160:783" ph="..." />
-                <marker date="1540639882633" expanded="true" signature="1577:1615" ph="..." />
               </folding>
             </state>
           </provider>
@@ -89,6 +79,11 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>style</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -109,10 +104,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-14" />
-    <option name="y" value="-14" />
-    <option name="width" value="1703" />
-    <option name="height" value="1071" />
+    <option name="x" value="-13" />
+    <option name="y" value="-13" />
+    <option name="width" value="1150" />
+    <option name="height" value="1516" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -223,12 +218,12 @@
     <frame x="-7" y="-7" width="1303" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12610441" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.53846157" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.09311741" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -258,7 +253,7 @@
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
-          <caret line="2" column="21" lean-forward="true" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
@@ -267,30 +262,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tabs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret line="13" column="92" lean-forward="true" selection-start-line="13" selection-start-column="92" selection-end-line="13" selection-end-column="92" />
+        <state relative-caret-position="243">
+          <caret line="13" column="92" selection-start-line="13" selection-start-column="92" selection-end-line="13" selection-end-column="92" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1540639882633" expanded="true" signature="160:783" ph="..." />
-            <marker date="1540639882633" expanded="true" signature="1577:1615" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tab1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="180" column="57" selection-start-line="180" selection-start-column="57" selection-end-line="180" selection-end-column="57" />
+        <state relative-caret-position="268">
+          <caret line="182" column="44" selection-start-line="182" selection-start-column="44" selection-end-line="182" selection-end-column="44" />
           <folding>
             <element signature="e#0#77#0" expanded="true" />
-            <element signature="e#9747#9820#0" />
-            <element signature="e#9873#10078#0" />
-            <element signature="e#10131#10932#0" />
-            <element signature="e#10973#11042#0" />
-            <element signature="e#11101#11404#0" />
-            <element signature="e#11438#11689#0" />
-            <element signature="e#11729#11897#0" />
-            <element signature="e#11931#12618#0" />
           </folding>
         </state>
       </provider>

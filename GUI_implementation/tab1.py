@@ -86,7 +86,7 @@ class Tab1(ttk.Frame):
 
 
         self.labelFrame_configure2DPlot = ttk.LabelFrame(self, text=' Configure 2D plot ')
-        self.labelFrame_configure2DPlot.grid(row=2, column=0, columnspan=4, sticky=W + E, padx=10, pady=(2, 5))
+        self.labelFrame_configure2DPlot.grid(row=2, rowspan=3, column=0, columnspan=4, sticky=W + E, padx=10, pady=(2, 5))
         self.labelFrame_configure2DPlot.rowconfigure(0, weight=0)
         self.labelFrame_configure2DPlot.rowconfigure(1, weight=0)
         self.labelFrame_configure2DPlot.rowconfigure(2, weight=0)
@@ -177,8 +177,13 @@ class Tab1(ttk.Frame):
         self.checkbox_scale4x = tkinter.Checkbutton(self.labelFrame_plot2DOptions, command= lambda: self.update_scale_checkbuttons(2), variable=self.var_scale4x)
         self.checkbox_scale4x.grid(row=2, column=3, sticky=W + E, padx=10, pady=(2, 5))
 
-        self.button_plot = ttk.Button(self.labelFrame_configure2DPlot, text='Plot', command=self.plot)
-        self.button_plot.grid(row=0, column=5, rowspan=2,columnspan=3, sticky=W + E, padx=10, pady=(2, 5))
+
+        self.frame_plotButton = ttk.Frame(self.labelFrame_configure2DPlot)
+        self.frame_plotButton.grid(row=0, rowspan=3, column=5, columnspan=2, sticky=W + E + N + S, padx=10, pady=(2, 5))
+        self.frame_plotButton.rowconfigure(0, weight=1)
+        self.frame_plotButton.columnconfigure(0, weight=1)
+        self.button_plot = ttk.Button(self.frame_plotButton, text='Plot',command=self.plot)
+        self.button_plot.grid(row=0, column=0,  sticky=W + E + N +S, padx=10, pady=(2, 5))
 
 
 
