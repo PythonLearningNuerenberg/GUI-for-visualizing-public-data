@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.by import By
 
 
 class DataCrawler:
@@ -68,11 +69,13 @@ class DataCrawler:
             self.driver.get(csv_link)
 
             # wait for redirect
-            wait = WebDriverWait(self.driver, 30)
+            wait = WebDriverWait(self.driver, 10)
             wait.until(ec.url_changes(csv_link))
+            redir_url = self.driver.current_url
 
             # get url and data
-            redir_url = self.driver.current_url
+            element_presence = ec.presence_of_element_located((By.TAG_NAME,'pre'))
+            WebDriverWait(self.driver,10).until(element_presence)
             csv_string = self.driver.find_element_by_tag_name('pre').text
         except:
             logging.warning(link)
