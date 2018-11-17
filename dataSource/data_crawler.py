@@ -30,13 +30,11 @@ class DataCrawler:
         if self.folderpath != '' and not os.path.exists(self.folderpath):
             os.makedirs(self.folderpath)
 
+
     def crawl_all_csv_files_from_page(self, page_link):
         # get files list at page
         csv_file_list = self.crawl_csv_file_list_from_page(page_link)
         print('Number of files on page: ' + str(len(csv_file_list)))
-        for csv_link in csv_file_list:
-            print('- ' + csv_link['link'])
-
         print('\n\n')
 
         # download the content of all files from list
@@ -47,36 +45,38 @@ class DataCrawler:
                 result = self.download_csv(link_on_page['link'])
 
                 # store
-                print('- storing to: ' + result['filename'])
-                self.store_data_in_file(result['csv'], result['filename'])
-
-                print()
+                if(len(result['csv'])>0 and len(result['filename'])>0):
+                    self.store_data_in_file(result['csv'], result['filename'])
+                else:
+                    print('skipping......')
 
     def crawl_csv_file_list_from_page(self, page_link):
         self.driver.get(page_link)
         links_elements = self.driver.find_elements_by_tag_name('a')
+
         links_on_page = [{'text': link.text, 'link': link.get_attribute('href')}
-                         for link in links_elements if '.csv' in link.text and '.csv' in link.get_attribute('href')]
+                         for link in links_elements if link.get_attribute('href').endswith('csv') and link.text.endswith('csv')]
 
         return links_on_page
 
     def download_csv(self, link):
+        redir_url=''
+        csv_string=''
         try:
             self.driver.get(link)
             csv_link = self.driver.find_element_by_id('raw-url').get_attribute('href')
             self.driver.get(csv_link)
 
             # wait for redirect
-            wait = WebDriverWait(self.driver, 10)
+            wait = WebDriverWait(self.driver, 30)
             wait.until(ec.url_changes(csv_link))
 
             # get url and data
             redir_url = self.driver.current_url
             csv_string = self.driver.find_element_by_tag_name('pre').text
-
-            return {'filename': str(redir_url).split('/')[-1], 'csv': csv_string}
         except:
             logging.warning(link)
+        return {'filename': str(redir_url).split('/')[-1], 'csv': csv_string}
 
     def store_data_in_file(self, csv_string, filename):
         full_path = os.path.join(self.folderpath, filename)
