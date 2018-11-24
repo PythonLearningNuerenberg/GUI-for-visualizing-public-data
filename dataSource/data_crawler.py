@@ -33,12 +33,18 @@ class DataCrawler:
         if self.folderpath != '' and not os.path.exists(self.folderpath):
             os.makedirs(self.folderpath)
 
+
+    def __privateMethod(self):
+        print("hellooooooo")
+
+
     def get_table_names(self):
         return self.table_names
 
-    def crawl_all_csv_files_from_page(self, page_link):
+    def crawl_all_csv_files_from_page(self):
         # get files list at page
-        self.crawl_csv_file_list_from_page(page_link)
+        github_link = self.config['github']['csv_page']
+        self.crawl_csv_file_list_from_page(github_link)
         print('Number of files on page: ' + str(len(self.data_source_links)))
         print('\n\n')
         for filename in self.data_source_links.keys():
@@ -46,12 +52,13 @@ class DataCrawler:
 
 
 
-    def store_data_source(self):
+    def store_data_source(self,table_name):
         # download the content of all files from list
-        for name,link_on_page in self.data_source_links.items():
-            if '.csv' in link_on_page:
-                print('- ' + link_on_page)
-                result = self.download_csv(link_on_page)
+        if isinstance(table_name,str):
+            demanded_link = self.data_source_links[table_name]
+            if '.csv' in demanded_link:
+                print('- ' + demanded_link)
+                result = self.download_csv(demanded_link)
 
                 # store
                 if(len(result['csv'])>0 and len(result['filename'])>0):
@@ -59,6 +66,9 @@ class DataCrawler:
                     self.store_data_in_file(result['csv'], result['filename'])
                 else:
                     print('skipping......')
+        else:
+            print("Passed argument is not string")
+
 
     def crawl_csv_file_list_from_page(self, page_link):
         self.driver.get(page_link)
@@ -99,4 +109,4 @@ if __name__ == '__main__':
     dc = DataCrawler('Downloaded Data')
     github_link = dc.config['github']['csv_page']
     dc.crawl_all_csv_files_from_page(github_link)
-    dc.store_data_source()
+#    dc.store_data_source()

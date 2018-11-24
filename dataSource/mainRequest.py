@@ -1,5 +1,6 @@
 import requests
 import re
+from data_crawler import DataCrawler
 # singleton class to fetch the data from different source.
 # TODO: In which format the data will be available
 # TODO: From where the data will come and in which form.
@@ -10,7 +11,10 @@ class DataSource:
     '''A singleton Data source class'''
     __instance = None;
 
+
     def __init__(self):
+        self.dataCr = DataCrawler()
+
         if DataSource.__instance != None:
             raise Exception("Singleton class, use getInstance() method to create instances")
         else:
@@ -27,6 +31,8 @@ class DataSource:
     def getDataSourceLocations(self):
         '''read config file to get the data sources'''
         # with block simplifies file handling, instead of try, except
+
+
         with open("config.txt","r") as configFileHandle:
             for lines in configFileHandle:
                 # one can check here if the data source link in correctly written here, skip the # comments
