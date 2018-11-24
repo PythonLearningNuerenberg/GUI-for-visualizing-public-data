@@ -19,6 +19,8 @@ class DataCrawler:
             self.config = json.load(config_file)
 
         # selenium
+        self.table_names = list()
+        self.data_source_links = dict()
         self.driver_options = Options()
         self.driver_options.add_argument("--headless")
         self.driver = webdriver.Chrome(self.config['Selenium']['chrome_driver_path'],
@@ -31,22 +33,29 @@ class DataCrawler:
         if self.folderpath != '' and not os.path.exists(self.folderpath):
             os.makedirs(self.folderpath)
 
+    def get_table_names(self):
+        return self.table_names
 
     def crawl_all_csv_files_from_page(self, page_link):
         # get files list at page
-        csv_file_list = self.crawl_csv_file_list_from_page(page_link)
-        print('Number of files on page: ' + str(len(csv_file_list)))
+        self.crawl_csv_file_list_from_page(page_link)
+        print('Number of files on page: ' + str(len(self.data_source_links)))
         print('\n\n')
+        for filename in self.data_source_links.keys():
+            self.table_names.append(filename[0:filename.find('.')])
 
+
+
+    def store_data_source(self):
         # download the content of all files from list
-        for link_on_page in csv_file_list:
-            if '.csv' in link_on_page['text']:
-                print(link_on_page['text'])
-                print('- ' + link_on_page['link'])
-                result = self.download_csv(link_on_page['link'])
+        for name,link_on_page in self.data_source_links.items():
+            if '.csv' in link_on_page:
+                print('- ' + link_on_page)
+                result = self.download_csv(link_on_page)
 
                 # store
                 if(len(result['csv'])>0 and len(result['filename'])>0):
+                    self.table_names.append(result['filename'])
                     self.store_data_in_file(result['csv'], result['filename'])
                 else:
                     print('skipping......')
@@ -55,10 +64,9 @@ class DataCrawler:
         self.driver.get(page_link)
         links_elements = self.driver.find_elements_by_tag_name('a')
 
-        links_on_page = [{'text': link.text, 'link': link.get_attribute('href')}
-                         for link in links_elements if link.get_attribute('href').endswith('csv') and link.text.endswith('csv')]
+        self.data_source_links = { link.text : link.get_attribute('href')
+                                   for link in links_elements if link.get_attribute('href').endswith('csv') and link.text.endswith('csv')}
 
-        return links_on_page
 
     def download_csv(self, link):
         redir_url=''
@@ -91,3 +99,4 @@ if __name__ == '__main__':
     dc = DataCrawler('Downloaded Data')
     github_link = dc.config['github']['csv_page']
     dc.crawl_all_csv_files_from_page(github_link)
+    dc.store_data_source()
