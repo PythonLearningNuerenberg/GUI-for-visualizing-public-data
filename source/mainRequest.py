@@ -1,5 +1,5 @@
 import requests
-
+import re
 # singleton class to fetch the data from different source.
 # TODO: In which format the data will be available
 # TODO: From where the data will come and in which form.
@@ -39,24 +39,25 @@ class DataSource:
 
     def generateDataBank(self):
         '''generates the data bank'''
-        if(self.createDataSource()):
+        if(self.getDataSourceLocations()):
             for source in self.onlineDataSource:
-                page = requests.get(source)
+                '''check if there is a new line character at the end, remove it'''
+                if(source[-1] == "\n"):
+                    page = requests.get(source[:-1])
+                else:
+                    page = requests.get(source)
                 # check status here
                 if (page.status_code != 404):
                     # if status code is OK then, think how to get the data from that page
                     print("Status code returned: OK")
-                    print(page.status_code)
-                    print(page.encoding)
-                    print(page.text)
+                    matchObj = re.findall(r'href=\"(http.*csv)\"',page.text,re.M|re.I)
+                    for links in matchObj:
+                        print("Data source:",links)
+                    print("No of csv:",len(matchObj))
                 else:
                     print("Status code is 404!!")
-
 
 # check whether the class gives the same instance to all the caller
 
 dataSource1 = DataSource.getInstance();
-if(dataSource1.createDataSource()):
-    print("ok")
-else:
-    print("nok")
+dataSource1.generateDataBank()
