@@ -43,8 +43,7 @@ class DataCrawler:
 
     def crawl_all_csv_files_from_page(self):
         # get files list at page
-        github_link = self.config['github']['csv_page']
-        self.crawl_csv_file_list_from_page(github_link)
+        self.crawl_csv_file_list_from_page(self.config['github']['csv_page'])
         print('Number of files on page: ' + str(len(self.data_source_links)))
         print('\n\n')
         for filename in self.data_source_links.keys():
@@ -76,7 +75,7 @@ class DataCrawler:
 
         self.data_source_links = { link.text : link.get_attribute('href')
                                    for link in links_elements if link.get_attribute('href').endswith('csv') and link.text.endswith('csv')}
-
+d mmet  
 
     def download_csv(self, link):
         redir_url=''
@@ -108,5 +107,5 @@ class DataCrawler:
 if __name__ == '__main__':
     dc = DataCrawler('Downloaded Data')
     github_link = dc.config['github']['csv_page']
-    dc.crawl_all_csv_files_from_page(github_link)
+    dc.crawl_all_csv_files_from_page()
 #    dc.store_data_source()

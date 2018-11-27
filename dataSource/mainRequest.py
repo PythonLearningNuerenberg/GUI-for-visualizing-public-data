@@ -32,7 +32,7 @@ class DataSource:
         '''read config file to get the data sources'''
         # with block simplifies file handling, instead of try, except
 
-
+        self.dataCr._DataCrawler__privateMethod()
         with open("config.txt","r") as configFileHandle:
             for lines in configFileHandle:
                 # one can check here if the data source link in correctly written here, skip the # comments
