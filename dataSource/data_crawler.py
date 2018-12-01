@@ -1,6 +1,7 @@
 import os
 import logging
 import json
+import platform
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -23,19 +24,19 @@ class DataCrawler:
         self.data_source_links = dict()
         self.driver_options = Options()
         self.driver_options.add_argument("--headless")
-        self.driver = webdriver.Chrome(self.config['Selenium']['chrome_driver_path'],
+        if platform.system() == 'Linux':
+            self.driver = webdriver.Chrome(self.config['Selenium']['chrome_driver_path_linux'],
+                                       chrome_options=self.driver_options)
+        elif platform.system() == 'Windows':
+            self.driver = webdriver.Chrome(self.config['Selenium']['chrome_driver_path_win'],
                                        chrome_options=self.driver_options)
 
-        # target folder
-        self.folderpath = folderpath
+
+        # target folder self.folderpath = folderpath
         if self.folderpath is None:
             self.folderpath = ''
         if self.folderpath != '' and not os.path.exists(self.folderpath):
             os.makedirs(self.folderpath)
-
-
-    def __privateMethod(self):
-        print("hellooooooo")
 
 
     def get_table_names(self):
@@ -75,7 +76,6 @@ class DataCrawler:
 
         self.data_source_links = { link.text : link.get_attribute('href')
                                    for link in links_elements if link.get_attribute('href').endswith('csv') and link.text.endswith('csv')}
-d mmet  
 
     def download_csv(self, link):
         redir_url=''

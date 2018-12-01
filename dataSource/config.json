@@ -1,6 +1,7 @@
 {
   "Selenium" : {
-    "chrome_driver_path" : "chromedriver_linux64/chromedriver"
+    "chrome_driver_path_linux" : "Webdrivers/chromedriver_linux/chromedriver",
+    "chrome_driver_path_win" : "Webdrivers/chromedriver_win/chromedriver"
   },
   "github" :{
     "csv_page" : "https://github.com/plotly/datasets"
